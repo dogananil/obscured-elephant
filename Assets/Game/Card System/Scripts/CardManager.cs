@@ -53,8 +53,57 @@ public class CardManager : IBootItem
         return a != null && b != null && a.id == b.id;
     }
 
-    internal async Task LoadCardsForLevel(LevelConfig levelConfig)
+    public async UniTask LoadCardsForLevel(LevelConfig config)
     {
-        
+        int totalCards = config.columns * config.rows;
+
+        if (totalCards % 2 != 0)
+        {
+            Debug.LogError("[CardManager] Total card count must be even.");
+            return;
+        }
+
+        int pairCount = totalCards / 2;
+
+        if (AllCards.Count == 0)
+        {
+            Debug.LogError("[CardManager] No cards available in library.");
+            return;
+        }
+
+        // Fill up enough pairs, even if it means reusing cards
+        List<CardData> selectedPairs = new();
+
+        while (selectedPairs.Count < pairCount)
+        {
+            var shuffled = AllCards.OrderBy(_ => UnityEngine.Random.value).ToList();
+            foreach (var card in shuffled)
+            {
+                selectedPairs.Add(card);
+                if (selectedPairs.Count >= pairCount)
+                    break;
+            }
+        }
+
+        // Duplicate each card to create matching pairs
+        List<CardData> cardsToSpawn = new();
+        foreach (var card in selectedPairs)
+        {
+            cardsToSpawn.Add(card);
+            cardsToSpawn.Add(card);
+        }
+
+        // Shuffle
+        cardsToSpawn = cardsToSpawn.OrderBy(_ => UnityEngine.Random.value).ToList();
+
+
+        foreach (var card in cardsToSpawn)
+        {
+            // TODO: Instantiate prefab
+        }
+
+        await UniTask.Yield();
     }
+
+
 }
