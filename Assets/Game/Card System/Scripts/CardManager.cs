@@ -14,19 +14,27 @@ public class CardManager : IBootItem
     private List<CardData> _allCards = new();
     public IReadOnlyList<CardData> AllCards => _allCards;
 
+    private CardLibrary _cardLibrary;
+    public CardLibrary CardLibrary => _cardLibrary;
+
+    private CardPool _cardPool = new();
+    private GameObject _cardPoolParent;
+
     public async UniTask BootAsync()
     {
-        var library = await CardMatch.Loader.LoadAssetAsync<CardLibrary>(CardLibraryAddress);
+        _cardLibrary = await CardMatch.Loader.LoadAssetAsync<CardLibrary>(CardLibraryAddress);
 
-        if (library == null)
+        if (_cardLibrary == null)
         {
             Debug.LogError("[CardManager] Failed to load CardLibrary.");
             return;
         }
 
-        _allCards = library.Cards
+        _allCards = _cardLibrary.Cards
             .Where(card => card != null)
             .ToList();
+        _cardPoolParent= new GameObject("CardPool");
+        _cardPool.Init(_cardLibrary.CardPrefab, _allCards.Count * 2, _cardPoolParent.transform);
     }
     public List<CardData> GenerateRandomPairs(int pairCount)
     {

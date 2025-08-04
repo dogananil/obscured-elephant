@@ -6,4 +6,7 @@ public class CardLibrary : ScriptableObject
 {
     [Tooltip("List of addressable CardData references")]
     public List<CardData> Cards = new();
+
+    public Sprite BackIconOfCard;
+    public CardView CardPrefab;
 }

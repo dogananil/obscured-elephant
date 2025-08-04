@@ -23,3 +23,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 50a3f3c1717a1e34ebfa8267616ebbba, type: 2}
   - {fileID: 11400000, guid: 7bfd548950567734eaab43652bf8459c, type: 2}
   - {fileID: 11400000, guid: 7efaa0e70fdc6ef4cb5c05c9c585b122, type: 2}
+  BackIconOfCard: {fileID: 21300000, guid: 2f2d963c4cc58464da0029d7c0f3fd18, type: 3}
+  CardPrefab: {fileID: -7900195145941837032, guid: 3eae972ee1db2d941be4e0cb078836ee, type: 3}
