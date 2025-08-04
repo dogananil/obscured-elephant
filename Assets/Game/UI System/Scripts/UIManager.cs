@@ -2,6 +2,7 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Triggers;
+using System;
 
 public class UIManager : MonoBehaviour, IBootItem
 {
@@ -68,6 +69,20 @@ public class UIManager : MonoBehaviour, IBootItem
         else
         {
             Debug.LogWarning($"[UIManager] View not found: {viewName}");
+        }
+    }
+
+    internal View GetView<T>()
+    {
+        string viewName = typeof(T).Name;
+        if (views.TryGetValue(viewName, out var view))
+        {
+            return view;
+        }
+        else
+        {
+            Debug.LogWarning($"[UIManager] View not found: {viewName}");
+            return null;
         }
     }
 }

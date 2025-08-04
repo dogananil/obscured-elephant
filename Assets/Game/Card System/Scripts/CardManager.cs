@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
@@ -33,9 +32,11 @@ public class CardManager : IBootItem
         _allCards = _cardLibrary.Cards
             .Where(card => card != null)
             .ToList();
-        _cardPoolParent= new GameObject("CardPool");
+
+        _cardPoolParent = new GameObject("CardPool");
         _cardPool.Init(_cardLibrary.CardPrefab, _allCards.Count * 2, _cardPoolParent.transform);
     }
+
     public List<CardData> GenerateRandomPairs(int pairCount)
     {
         var selected = _allCards
@@ -73,18 +74,17 @@ public class CardManager : IBootItem
 
         int pairCount = totalCards / 2;
 
-        if (AllCards.Count == 0)
+        if (_allCards.Count == 0)
         {
             Debug.LogError("[CardManager] No cards available in library.");
             return;
         }
 
-        // Fill up enough pairs, even if it means reusing cards
+        // Select pairs (cards can repeat if needed)
         List<CardData> selectedPairs = new();
-
         while (selectedPairs.Count < pairCount)
         {
-            var shuffled = AllCards.OrderBy(_ => UnityEngine.Random.value).ToList();
+            var shuffled = _allCards.OrderBy(_ => Random.value).ToList();
             foreach (var card in shuffled)
             {
                 selectedPairs.Add(card);
@@ -93,25 +93,32 @@ public class CardManager : IBootItem
             }
         }
 
-        // Duplicate each card to create matching pairs
-        List<CardData> cardsToSpawn = new();
-        foreach (var card in selectedPairs)
-        {
-            cardsToSpawn.Add(card);
-            cardsToSpawn.Add(card);
-        }
+        // Duplicate and shuffle
+        var cardsToSpawn = selectedPairs
+            .SelectMany(card => new[] { card, card })
+            .OrderBy(_ => Random.value)
+            .ToList();
 
-        // Shuffle
-        cardsToSpawn = cardsToSpawn.OrderBy(_ => UnityEngine.Random.value).ToList();
-
-
+        // Get card views
+        List<CardView> views = new();
         foreach (var card in cardsToSpawn)
         {
-            // TODO: Instantiate prefab
+            var view = _cardPool.Get();
+            view.Init(card);
+            views.Add(view);
         }
 
-        await UniTask.Yield();
+        // Get board view from UIManager
+        BoardView boardView = CardMatch.UI.GetView<BoardView>() as BoardView;
+        if (boardView == null)
+        {
+            Debug.LogError("[CardManager] BoardView not found from UIManager.");
+            return;
+        }
+
+        var layoutSystem = new BoardLayoutSystem();
+        layoutSystem.LayoutCards(views, new Vector2Int(config.columns,config.rows), boardView.CardContainer);
+
+        await CardMatch.UI.Show("BoardView");
     }
-
-
 }
