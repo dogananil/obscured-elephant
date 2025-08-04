@@ -40,6 +40,7 @@ public class CardSelectionController : ISimpleItem
 
         if (CardMatch.CardManager.AreMatching(a.Data, b.Data))
         {
+            CardMatch.GameManager.RegisterMatch();
             a.Disable();
             b.Disable();
         }
@@ -48,7 +49,7 @@ public class CardSelectionController : ISimpleItem
             a.Hide();
             b.Hide();
         }
-
+        CardMatch.GameManager.RegisterTurn();
         _selected.Clear();
         _isLocked = false;
     }

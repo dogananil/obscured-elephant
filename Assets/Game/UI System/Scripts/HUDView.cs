@@ -18,7 +18,11 @@ public class HUDView : View
     {
         
     }
-    
+    public void Setup(int totalPairs)
+    {
+        UpdateTurnCount(0);
+        UpdateMatches(0);
+    }
     public void UpdateTurnCount(int turnCount)
     {
         _turnCountText.text = $"Turns: {turnCount}";

@@ -5,21 +5,54 @@ public class GameManager : IBootItem
 {
     private GameState _state;
     private int _turnCount;
+    private int _matchCount;
+    private int _totalPairs;
 
     public async UniTask BootAsync()
     {
         _state = GameState.Menu;
         _turnCount = 0;
+        _matchCount = 0;
+        _totalPairs = 0;
 
         await CardMatch.UI.Show("MenuView");
     }
 
-    public async UniTask StartGame()
+    public async UniTask StartGame(int totalPairs)
     {
         _state = GameState.Playing;
         _turnCount = 0;
+        _matchCount = 0;
+        _totalPairs = totalPairs;
+
+        HUDView hudView = CardMatch.UI.GetView<HUDView>() as HUDView;
+        hudView.Setup(totalPairs);
 
         await CardMatch.LevelManager.GenerateLevel();
+    }
+
+    public void RegisterTurn()
+    {
+        if (_state != GameState.Playing) return;
+
+        _turnCount++;
+        HUDView hudView = CardMatch.UI.GetView<HUDView>() as HUDView;
+        hudView.UpdateTurnCount(_turnCount);
+    }
+
+    public async UniTask RegisterMatch()
+    {
+        if (_state != GameState.Playing) return;
+
+        _matchCount++;
+
+        HUDView hudView = CardMatch.UI.GetView<HUDView>() as HUDView;
+        hudView.UpdateMatches(_matchCount);
+
+        if (_matchCount >= _totalPairs)
+        {
+            await EndGame();
+        }
     }
 
     public async UniTask EndGame()
@@ -30,12 +63,9 @@ public class GameManager : IBootItem
         await CardMatch.UI.Show("GameOverView");
 
         Debug.Log($"Game Over! Turns used: {_turnCount}");
-    }
 
-    public void IncrementTurn()
-    {
-        if (_state != GameState.Playing) return;
-        _turnCount++;
+        // Save next level index
+        CardMatch.SaveManager.SaveLevelIndex(CardMatch.SaveManager.CurrentLevelIndex + 1);
     }
 
     public int GetTurnCount() => _turnCount;
