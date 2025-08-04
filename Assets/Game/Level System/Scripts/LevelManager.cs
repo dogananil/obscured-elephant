@@ -13,6 +13,9 @@ public class LevelManager : IBootItem
     private LevelHolder _levelHolder;
     public LevelHolder LevelHolder => _levelHolder;
 
+    private LevelConfig _currentLevelConfig;
+    public LevelConfig CurrentLevelConfig => _currentLevelConfig;
+
     public async UniTask BootAsync()
     {
 
@@ -50,9 +53,9 @@ public class LevelManager : IBootItem
         // Get the current level index from SaveManager
         int currentLevelIndex = CardMatch.SaveManager.CurrentLevelIndex;
         // Get the level config for the current level
-        LevelConfig levelConfig = GetLevelConfig(currentLevelIndex);
+        _currentLevelConfig = GetLevelConfig(currentLevelIndex);
         // Load cards for this level
-        await CardMatch.CardManager.LoadCardsForLevel(levelConfig);
+        await CardMatch.CardManager.LoadCardsForLevel(_currentLevelConfig);
         // Notify UI to update
         await CardMatch.UI.Hide("MenuView");
         await CardMatch.UI.Show("HUDView");

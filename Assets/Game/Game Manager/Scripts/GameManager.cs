@@ -6,27 +6,25 @@ public class GameManager : IBootItem
     private GameState _state;
     private int _turnCount;
     private int _matchCount;
-    private int _totalPairs;
+    private int _totalPairs=> (CardMatch.LevelManager.CurrentLevelConfig.rows*CardMatch.LevelManager.CurrentLevelConfig.columns)/2;
 
     public async UniTask BootAsync()
     {
         _state = GameState.Menu;
         _turnCount = 0;
         _matchCount = 0;
-        _totalPairs = 0;
 
         await CardMatch.UI.Show("MenuView");
     }
 
-    public async UniTask StartGame(int totalPairs)
+    public async UniTask StartGame()
     {
         _state = GameState.Playing;
         _turnCount = 0;
         _matchCount = 0;
-        _totalPairs = totalPairs;
 
         HUDView hudView = CardMatch.UI.GetView<HUDView>() as HUDView;
-        hudView.Setup(totalPairs);
+        hudView.Setup();
 
         await CardMatch.LevelManager.GenerateLevel();
     }

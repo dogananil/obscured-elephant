@@ -18,7 +18,7 @@ public class HUDView : View
     {
         
     }
-    public void Setup(int totalPairs)
+    public void Setup()
     {
         UpdateTurnCount(0);
         UpdateMatches(0);
