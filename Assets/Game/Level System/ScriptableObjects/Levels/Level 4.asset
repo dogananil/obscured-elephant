@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7911486d5ee6ce54ab5dbf2f2f69a1a4, type: 3}
   m_Name: Level 4
   m_EditorClassIdentifier: 
-  rows: 2
-  columns: 2
+  rows: 4
+  columns: 3

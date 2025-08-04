@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class CardView : MonoBehaviour
@@ -51,5 +52,13 @@ public class CardView : MonoBehaviour
     {
         _button.interactable = false;
         _icon.enabled = false;
+    }
+
+    internal void Reset()
+    {
+        _isRevealed = false;
+        _icon.enabled = true;
+        _icon.sprite = CardMatch.CardManager.CardLibrary.BackIconOfCard;
+        _button.interactable = true;
     }
 }
