@@ -9,6 +9,7 @@ public static class CardMatch
     public static CardManager CardManager = new(); // Card Manager for managing card data and matching logic
     public static UIManager UI = new(); // UI Manager for handling user interface
     public static GameManager GameManager = new(); // Game Manager for managing game state and logic
+    public static CardSelectionController Selection = new(); // Card Selection Controller for handling card interactions
 
     public static async UniTask Boot()
     {
