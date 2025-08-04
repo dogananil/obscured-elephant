@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: CardData7
   m_EditorClassIdentifier: 
   id: 7
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: ff8a263fc7324f74f9241b907a937e4c, type: 3}
