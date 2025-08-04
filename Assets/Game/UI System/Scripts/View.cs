@@ -18,9 +18,10 @@ public class View : MonoBehaviour
     }
     public virtual async UniTask Show()
     {
-
+        gameObject.SetActive(true);
     }
     public virtual async UniTask Hide()
     {
+        gameObject.SetActive(false);
     }
 }
