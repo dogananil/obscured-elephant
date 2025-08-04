@@ -6,5 +6,5 @@ using UnityEngine.AddressableAssets;
 public class CardLibrary : ScriptableObject
 {
     [Tooltip("List of addressable CardData references")]
-    public List<CardData> cards = new();
+    public List<CardData> Cards = new();
 }
