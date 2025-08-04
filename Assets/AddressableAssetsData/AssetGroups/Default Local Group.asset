@@ -25,6 +25,10 @@ MonoBehaviour:
     m_Address: LevelHolder
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: a0749a73a995ecc47a81f2fdc5b4207b
+    m_Address: ViewLibrary
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 112858a83b623bd4f945d3580acf3d1d, type: 2}
   m_SchemaSet:
