@@ -1,40 +1,22 @@
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using Cysharp.Threading.Tasks;
 
 /// <summary>
 /// Loads CardLibrary and handles level-related data such as card pool and grid configuration.
 /// </summary>
 public class LevelManager : IBootItem
 {
-    private const string CardLibraryAddress = "CardLibrary";
     private const string LevelHolderAddress = "LevelHolder";
-
-    private CardLibrary _cardLibrary;
-    public CardLibrary CardLibrary => _cardLibrary;
-    public List<CardData> AllCards { get; private set; }
 
     private LevelHolder _levelHolder;
     public LevelHolder LevelHolder => _levelHolder;
 
     public async UniTask BootAsync()
     {
-        // Load CardLibrary from Addressables
-        _cardLibrary = await CardMatch.Loader.LoadAssetAsync<CardLibrary>(CardLibraryAddress);
 
-        if (CardLibrary == null)
-        {
-            Debug.LogError("[LevelManager] Failed to load CardLibrary");
-            return;
-        }
-
-        AllCards = CardLibrary.Cards
-            .Where(card => card != null)
-            .ToList();
-
-        _levelHolder= await LoadLevelHolderAsync();
+        _levelHolder = await LoadLevelHolderAsync();
     }
     /// <summary>
     /// Load level holder from Addressables.
@@ -98,21 +80,5 @@ public class LevelManager : IBootItem
         }
 
         return new Vector2Int(bestCols, bestRows); // X = cols, Y = rows
-    }
-
-
-    public List<CardData> GenerateRandomCardPairs(int pairCount)
-    {
-        var selected = AllCards
-            .OrderBy(_ => Random.value)
-            .Take(pairCount)
-            .ToList();
-
-        var fullList = selected
-            .Concat(selected)
-            .OrderBy(_ => Random.value)
-            .ToList();
-
-        return fullList;
     }
 }
