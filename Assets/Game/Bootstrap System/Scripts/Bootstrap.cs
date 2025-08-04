@@ -9,12 +9,7 @@ public class Bootstrap : MonoBehaviour
     // Called automatically by Unity when the scene starts
     private async void Start()
     {
-        Debug.Log("⏳ Booting CardMatch systems...");
-
         // Initialize all systems
         await CardMatch.Boot();
-
-        Debug.Log("✅ All systems booted!");
-
     }
 }

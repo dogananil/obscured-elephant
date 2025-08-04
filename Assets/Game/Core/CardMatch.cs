@@ -9,9 +9,5 @@ public static class CardMatch
     public static async UniTask Boot()
     {
         CardLibrary library= await Loader.LoadAssetAsync<CardLibrary>("CardLibrary");
-        foreach(var card in library.Cards)
-        {
-            Debug.LogError($"card {card.id}");
-        }
     }
 }
