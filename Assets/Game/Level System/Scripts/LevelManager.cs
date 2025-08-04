@@ -40,7 +40,23 @@ public class LevelManager : IBootItem
 
         return GenerateDefaultLevelConfig(index);
     }
-
+    public async UniTask GenerateLevel()
+    {
+        if (LevelHolder == null)
+        {
+            Debug.LogError("[LevelManager] LevelHolder is not loaded. Cannot generate level.");
+            return;
+        }
+        // Get the current level index from SaveManager
+        int currentLevelIndex = CardMatch.SaveManager.CurrentLevelIndex;
+        // Get the level config for the current level
+        LevelConfig levelConfig = GetLevelConfig(currentLevelIndex);
+        // Load cards for this level
+        await CardMatch.CardManager.LoadCardsForLevel(levelConfig);
+        // Notify UI to update
+        await CardMatch.UI.Hide("MenuView");
+        await CardMatch.UI.Show("HUDView");
+    }
     private LevelConfig GenerateDefaultLevelConfig(int level)
     {
         int pairCount = Mathf.Min(2 + level, 18); // max 18 pair = 36 cards

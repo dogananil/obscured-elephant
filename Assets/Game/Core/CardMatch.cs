@@ -8,6 +8,7 @@ public static class CardMatch
     public static LevelManager LevelManager = new(); // Level Manager for handling levels
     public static CardManager CardManager = new(); // Card Manager for managing card data and matching logic
     public static UIManager UI = new(); // UI Manager for handling user interface
+    public static GameManager GameManager = new(); // Game Manager for managing game state and logic
 
     public static async UniTask Boot()
     {
@@ -15,5 +16,6 @@ public static class CardMatch
         await SaveManager.BootAsync(); // Boot SaveManager
         await CardManager.BootAsync(); // Boot CardManager
         await LevelManager.BootAsync(); // Boot LevelManager
+        await GameManager.BootAsync(); // Boot GameManager
     }
 }

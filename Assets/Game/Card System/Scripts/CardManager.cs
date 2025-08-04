@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
@@ -50,5 +51,10 @@ public class CardManager : IBootItem
     public bool AreMatching(CardData a, CardData b)
     {
         return a != null && b != null && a.id == b.id;
+    }
+
+    internal async Task LoadCardsForLevel(LevelConfig levelConfig)
+    {
+        
     }
 }

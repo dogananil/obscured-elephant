@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,6 +30,6 @@ public class MenuView : View
 
     private void OnPlayButtonClicked()
     {
-        
+        CardMatch.GameManager.StartGame().Forget();
     }
 }
