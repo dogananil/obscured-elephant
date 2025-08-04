@@ -21,6 +21,10 @@ MonoBehaviour:
     m_Address: CardLibrary
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: fae89185d05a5ac4bb0761023d67546b
+    m_Address: LevelHolder
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 112858a83b623bd4f945d3580acf3d1d, type: 2}
   m_SchemaSet:
