@@ -40,6 +40,7 @@ public class CardPool
         foreach (var card in _cardPool)
         {
             card.gameObject.SetActive(false);
+            card.transform.SetParent(_parent, false); // Reset parent to pool
         }
     }
 }

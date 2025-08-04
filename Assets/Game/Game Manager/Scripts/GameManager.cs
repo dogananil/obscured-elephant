@@ -64,6 +64,8 @@ public class GameManager : IBootItem
 
         // Save next level index
         CardMatch.SaveManager.SaveLevelIndex(CardMatch.SaveManager.CurrentLevelIndex + 1);
+        GameOverView gameOverView= CardMatch.UI.GetView<GameOverView>() as GameOverView;
+        gameOverView.Setup(_turnCount+1);
     }
 
     public int GetTurnCount() => _turnCount;

@@ -41,10 +41,7 @@ public class BoardLayoutSystem
         grid.constraintCount = gridSize.x;
 
         // Clear any existing children
-        foreach (Transform child in container)
-        {
-            Object.Destroy(child.gameObject);
-        }
+        CardMatch.CardManager.ResetCardPool();
 
         // Add cards to container
         foreach (var card in cardViews)

@@ -36,7 +36,10 @@ public class CardManager : IBootItem
         _cardPoolParent = new GameObject("CardPool");
         _cardPool.Init(_cardLibrary.CardPrefab, 36, _cardPoolParent.transform);
     }
-
+    public void ResetCardPool()
+    {
+        _cardPool.ResetAll();
+    }
     public List<CardData> GenerateRandomPairs(int pairCount)
     {
         var selected = _allCards
